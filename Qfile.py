@@ -58,7 +58,5 @@ for i in range(1000):
         if R[current, j] > 0:
             playable_actions.append(j)
     next_state = np.random.choice(playable_actions)
-
-print(
-    current, playable_actions, next_state
-)
+    # Time difference.
+    TD = R[] + gamma * Q[] - Q[]
