@@ -50,4 +50,15 @@ R = np.array([
 # Initial Q values.
 Q = np.array(np.zeros([16,16]))
 
-print(Q)
+# Implement Q learning.
+for i in range(1000):
+    current = np.random.randint(0,16)
+    playable_actions = []
+    for j in range(16):
+        if R[current, j] > 0:
+            playable_actions.append(j)
+    next_state = np.random.choice(playable_actions)
+
+print(
+    current, playable_actions, next_state
+)
