@@ -1,12 +1,12 @@
 # Imports.
 import numpy as np
 
-# Q-learning parameters("default" values).
+# Setting for the Q-Learning.
 gamma = 0.75
 alpha = 0.9
 
-# Location to state.
-locations = {
+# States.
+location_to_state = {
     'A': 0,
     'B': 1,
     'C': 2,
@@ -18,45 +18,42 @@ locations = {
     'I': 8,
     'J': 9,
     'K': 10,
-    'L': 11,
-    'M': 12,
-    'N': 13,
-    'O': 14,
-    'P': 15,
+    'L': 11
 }
-# Actions.
-actions = [
-    1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
-]
-# Rewards matrix.
-R = np.array([
-    [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0],
-    [0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-    [0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
-    [0,0,1,0,0,0,1000,1,0,0,0,0,0,0,0,0],
-    [0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0],
-    [0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0],
-    [0,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0],
-    [0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-])
-# Initial Q values.
-Q = np.array(np.zeros([16,16]))
 
-# Implement Q learning.
+# Actions.
+actions = [0,1,2,3,4,5,6,7,8,9,10,11]
+
+# Rewards.
+R = np.array([
+    [0,1,0,0,0,0,0,0,0,0,0,0],
+    [1,0,1,0,0,1,0,0,0,0,0,0],
+    [0,1,0,0,0,0,1,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,0,0,0,0],
+    [0,0,0,0,0,0,0,0,1,0,0,0],
+    [0,1,0,0,0,0,0,0,0,1,0,0],
+    [0,0,1,0,0,0,1000,1,0,0,0,0],
+    [0,0,0,1,0,0,1,0,0,0,0,1],
+    [0,0,0,0,1,0,0,0,0,1,0,0],
+    [0,0,0,0,0,1,0,0,1,0,1,0],
+    [0,0,0,0,0,0,0,0,0,1,0,1],
+    [0,0,0,0,0,0,0,1,0,0,1,0]
+])
+
+# Dictionary.
+state_to_location = {state: location for location, state in location_to_state.items()}
+
+Q = np.array(np.zeros([12,12]))
+
+# Q-learning.
 for i in range(1000):
-    current = np.random.randint(0,16)
+    current_st = np.random.randint(0,12)
     playable_actions = []
-    for j in range(16):
-        if R[current, j] > 0:
+    for j in range(12):
+        if R[current_st, j] > 0:
             playable_actions.append(j)
-    next_state = np.random.choice(playable_actions)
-    # Time difference.
-    TD = R[] + gamma * Q[] - Q[]
+    next_st = np.random.choice(playable_actions)
+    TD = R[current_st, next_st] + gamma * Q[next_st, np.argmax(Q[next_st,])] - Q[current_st, next_st]
+    Q[current_st, next_st] = Q[current_st, next_st] + alpha * TD
+
+print(Q.astype(int))
