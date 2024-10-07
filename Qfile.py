@@ -74,4 +74,5 @@ def robot_route(starting_location, intermediary_location, ending_location):
     return route(starting_location, intermediary_location) + route(intermediary_location, ending_location)[1:]
 
 # Route.
-robot_route('E', 'K', 'G')
+route = robot_route('E', 'K', 'G')
+print(route)
